@@ -2,20 +2,62 @@
 
 [简体中文](docs/README.zh-CN.md) | [日本語](docs/README.ja.md)
 
-An experimental, one-click VR setup project for Windows Unity **Mono and IL2CPP** games.
-The goal is a shared control scheme and settings experience across games, rather than a separate mod for every title.
+[![Download the full installer](https://img.shields.io/badge/Download-full_installer-2ea44f?style=for-the-badge&logo=github)](https://github.com/Iyanzl/UnityOneClickVR/releases/download/v0.3.3-r20/UnityOneClickVR-M033-R20-full-win-x64.zip)
+[![Support development on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/iyanzl)
 
-**Download the complete installer from [Releases](https://github.com/Iyanzl/UnityOneClickVR/releases).** Choose the asset named `UnityOneClickVR-M033-R20-full-win-x64.zip`, not GitHub's automatic Source code archive. This is an experimental compatibility release, not a guarantee that every Unity game works. This repository is not an official Unity, Valve, Meta, or Virtual Desktop product.
+**Bring Unity games into VR, then keep their original interface within reach.**
+One installer for Windows Unity **Mono and IL2CPP** games, with a shared controller layout, a movable 2D interface, free/character-follow views and in-headset settings. Compatibility still varies by game.
 
-## Features
+**[Install](#getting-started) · [Controller Guide](docs/CONTROLS.md) · [OnlyUI / Local AI Boundaries](docs/ONLYUI.md) · [Release Notes](https://github.com/Iyanzl/UnityOneClickVR/releases)**
 
-- Stereo rendering through OpenVR / SteamVR, with game-dependent camera compatibility.
-- Tracked controllers, hand models, left-hand 2D panel, pointer and virtual keyboard.
-- World placement, depth occlusion, panel resizing, world movement and scale controls.
-- Free, first-person and third-person camera tools; target detection varies by game.
-- Shared real-time settings in English, Simplified Chinese and Japanese. Fresh installations default to English.
-- Optional UI-only capture. It does not reliably extract every game's UI; full-frame capture remains the fallback.
-- Separate desktop and VR launch paths, installation backups and an uninstall entry point.
+Download `UnityOneClickVR-M033-R20-full-win-x64.zip`, not GitHub's automatic Source code archive. Support is optional and never unlocks features or guarantees compatibility. This is not an official Unity, Valve, Meta or Virtual Desktop product.
+
+## What You Can Do
+
+| Feature | In practice |
+| --- | --- |
+| Keep the game's interface in VR | Put menus, dialogue, inventory and game buttons on a left-hand 2D panel; point and click with the right controller. |
+| Switch between hand-held and world placement | Y pins the panel where you place it; Y again brings it back to the left hand. World-placed panels use scene depth; hand-held and L3-locked panels remain front-layer tools. |
+| Move and resize the panel | Drag its outer margin in world mode, or resize from the corner margin. Resize also works while hand-held; moving it does not. |
+| Explore at a different scale | Walk using the stick, grab and move the world, adjust pitch/roll, or change world scale with a two-hand gesture. |
+| Choose a viewing style | Free/game-camera view, first person and third-person/over-shoulder follow, with target selection and adjustable offsets. Finding the correct character depends on the game's models. |
+| Switch to Xbox-style controls | Toggle controller emulation for games with native gamepad support; switch back to the VR interaction tools with the same chord. Requires a compatible virtual-controller driver. |
+| Type without leaving VR | A 104-key virtual keyboard includes function keys, modifiers, arrows and a numeric keypad. |
+| Adjust common settings in-headset | Shared settings for both runtimes, with English, Simplified Chinese and Japanese. Common panel/input/view settings apply live; some startup/rendering changes require restarting VR. |
+| Try transparent UI-only panels | OnlyUI attempts to keep the game's UI without a second copy of the 3D scene. It is game-dependent, not universal black-pixel transparency. See the limitations below. |
+| Keep a desktop launch path | Separate desktop/VR launchers, backups before replacement, and confirmed uninstall/restore. |
+
+## Default Controls
+
+Quest / Touch button names are used here. **L3/R3 mean pressing the sticks**, not moving them. Bindings changed in settings override these defaults.
+
+| Action | Default input |
+| --- | --- |
+| Open / close settings | L3 + R3 together, or F10 on the PC keyboard |
+| Show / hide the 2D panel | X |
+| Pin panel in the world / return to left hand | Y, with L3 view lock off |
+| Lock to the original game's interaction view / restore your VR viewing offset | Click and release L3 |
+| Left / right / middle mouse button | A or right trigger / B / R3 |
+| Free-view movement | Left stick, relative to current head facing |
+| Snap turn | Right stick left / right; 30 degrees by default |
+| Grab and move the world | Hold grip + trigger on **one** controller and move that hand |
+| Pitch / roll / level the horizon | Right grip + right stick up/down / left/right / R3 |
+| Scale the world | Hold both triggers, then hold A and move the hands apart/together; release to finish |
+| Reset world scale | Hold both triggers and double-tap A |
+| Toggle VR tools / Xbox-controller mode | Hold **both grips and both triggers** for at least 0.5 seconds, then release all; repeat to return |
+| Show the virtual keyboard | Enable **Show virtual keyboard** in settings; point and select with A or right trigger |
+
+Movement, world grabbing and angle adjustment are suspended while the L3 view is locked or settings are open. Unlock first. First-/third-person character views can route the left stick to a gamepad-controlled character instead of free-camera movement. Full Xbox mode repurposes buttons for the game and disables the VR pointer; the settings chord remains available.
+
+**[Full operating guide: panel edges, locking, camera targets, keyboard and Xbox mapping](docs/CONTROLS.md)**
+
+## OnlyUI: Important Boundaries
+
+OnlyUI is optional. Start with **FullFrame**, confirm that the full menu and pointer work, then try **UiOnly** under panel capture settings.
+
+It works automatically in some games; others need game-specific investigation, potentially with a local AI assistant. **AI is not required for ordinary VR use, is not bundled, and cannot guarantee a fix.** Missing/stripped UI APIs, custom shaders, UI Toolkit/IMGUI and pre-composited 3D/UI textures can require runtime changes rather than configuration. Do not repeatedly guess settings or erase black pixels from the interface.
+
+If text/buttons disappear, masks break, colours change or the scene is still included, switch back to FullFrame and read **[OnlyUI compatibility and bounded local-AI assistance](docs/ONLYUI.md)**. Never trade away readable, clickable UI just to obtain transparency.
 
 ## Compatibility
 
@@ -61,4 +103,6 @@ This work builds on UUVR, UnityVRMod and SummerInHeat SiH VR. Please support and
 
 ## Optional Support
 
-[Support development on Ko-fi](https://ko-fi.com/iyanzl). Support is entirely optional: it does not unlock features, buy a game compatibility guarantee, or replace the upstream licenses.
+[![Support development on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/iyanzl)
+
+Support is entirely optional: it does not unlock features, buy a game compatibility guarantee, or replace the upstream licenses.
