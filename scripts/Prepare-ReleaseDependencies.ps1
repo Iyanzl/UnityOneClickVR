@@ -26,6 +26,7 @@ $items=@(
     @{name='Semver-LICENSE.txt';url='https://raw.githubusercontent.com/adamreeve/semver.net/master/LICENSE'},
     @{name='Dobby-LICENSE.txt';url='https://raw.githubusercontent.com/jmpews/Dobby/master/LICENSE'},
     @{name='Capstone-LICENSE.txt';url='https://raw.githubusercontent.com/capstone-engine/capstone/4.0.2/LICENSE.TXT'},
+    @{name='Capstone-LLVM-LICENSE.txt';url='https://raw.githubusercontent.com/capstone-engine/capstone/4.0.2/LICENSE_LLVM.TXT'},
     @{name='UnityPluginSDK-LICENSE.md';url='https://raw.githubusercontent.com/Unity-Technologies/Graphics/master/LICENSE.md'}
 )
 $records=[Collections.Generic.List[object]]::new()
