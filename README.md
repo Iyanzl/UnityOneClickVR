@@ -8,7 +8,7 @@
 **Bring Unity games into VR, then keep their original interface within reach.**
 One installer for Windows Unity **Mono and IL2CPP** games, with a shared controller layout, a movable 2D interface, free/character-follow views and in-headset settings. Compatibility still varies by game.
 
-**[Install](#getting-started) · [Controller Guide](docs/CONTROLS.md) · [OnlyUI / Local AI Boundaries](docs/ONLYUI.md) · [Release Notes](https://github.com/Iyanzl/UnityOneClickVR/releases)**
+**[Install](#getting-started) · [Controller Guide](docs/CONTROLS.md) · [Settings Explained](docs/SETTINGS.md) · [OnlyUI / Local AI Boundaries](docs/ONLYUI.md) · [Release Notes](https://github.com/Iyanzl/UnityOneClickVR/releases)**
 
 Download `UnityOneClickVR-M033-R20-full-win-x64.zip`, not GitHub's automatic Source code archive. Support is optional and never unlocks features or guarantees compatibility. This is not an official Unity, Valve, Meta or Virtual Desktop product.
 
@@ -50,6 +50,9 @@ Quest / Touch button names are used here. **L3/R3 mean pressing the sticks**, no
 Movement, world grabbing and angle adjustment are suspended while the L3 view is locked or settings are open. Unlock first. First-/third-person character views can route the left stick to a gamepad-controlled character instead of free-camera movement. Full Xbox mode repurposes buttons for the game and disables the VR pointer; the settings chord remains available.
 
 **[Full operating guide: panel edges, locking, camera targets, keyboard and Xbox mapping](docs/CONTROLS.md)**
+
+**[Settings guide: every option, defaults, performance costs and animation-tearing tests](docs/SETTINGS.md)**
+The **More** tab's **Render in Update** changes drawing order; **Per-render skin matrices** addresses per-render skinned-mesh calculation. Both default Off, solve different problems and should be tested separately. Neither is a universal ghosting fix.
 
 ## OnlyUI: Important Boundaries
 

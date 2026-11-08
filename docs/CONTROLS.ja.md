@@ -1,6 +1,6 @@
 # 操作ガイド
 
-[English](CONTROLS.md) | [简体中文](CONTROLS.zh-CN.md) | [ホーム](README.ja.md)
+[English](CONTROLS.md) | [简体中文](CONTROLS.zh-CN.md) | [設定ガイド](SETTINGS.ja.md) | [ホーム](README.ja.md)
 
 Mono / IL2CPP 共通ランタイムの標準設定です。Quest / Touch の名称を使います。L3 / R3 はスティックの押し込みです。他のコントローラーは SteamVR のバインドに依存します。
 

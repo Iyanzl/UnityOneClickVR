@@ -8,7 +8,7 @@
 **Unity ゲームを VR に。ゲームのメニューは手元に。**
 Mono / IL2CPP 共通のインストーラー、操作、移動できる 2D パネル、ワールドの拡大縮小、追従カメラとヘッドセット内設定を提供します。対応状況はゲームによって異なります。
 
-**[操作ガイド](CONTROLS.ja.md) · [OnlyUI とローカル AI の制限](ONLYUI.md#日本語) · [リリース](https://github.com/Iyanzl/UnityOneClickVR/releases)**
+**[操作ガイド](CONTROLS.ja.md) · [設定ガイド](SETTINGS.ja.md) · [OnlyUI とローカル AI の制限](ONLYUI.md#日本語) · [リリース](https://github.com/Iyanzl/UnityOneClickVR/releases)**
 
 ## 主な機能
 
@@ -52,6 +52,8 @@ Quest / Touch のボタン名です。L3 / R3 はスティックの押し込み�
 | キーボード表示 | 設定の Show virtual keyboard を有効にし、A または右トリガーでキーを選ぶ |
 
 L3 ロック中や設定画面を開いている間は自由移動・ワールド移動・傾き調整が停止します。Xbox モードでは VR ポインターが無効になりますが、設定の L3+R3 は使用できます。詳細は [操作ガイド](CONTROLS.ja.md) を参照してください。
+
+**[全設定の作用・初期値・負荷・モデルの裂けを比較する手順](SETTINGS.ja.md)**。詳細タブの Render in Update は描画順序、Per-render skin matrices は描画ごとのスキニング計算に関する別の互換設定です。両方オフが初期値で、一つずつ比較してください。万能な残像対策ではありません。
 
 ## OnlyUI とローカル AI
 

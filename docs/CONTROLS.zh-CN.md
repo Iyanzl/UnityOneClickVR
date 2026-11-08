@@ -1,6 +1,6 @@
 # 操作指南
 
-[English](CONTROLS.md) | [日本語](CONTROLS.ja.md) | [返回首页](README.zh-CN.md)
+[English](CONTROLS.md) | [日本語](CONTROLS.ja.md) | [设置逐项说明](SETTINGS.zh-CN.md) | [返回首页](README.zh-CN.md)
 
 以下依据当前 Mono／IL2CPP 共用代码，使用 Quest／Touch 的按键名。L3／R3 指按下左右摇杆。其他手柄取决于 SteamVR 绑定；自行更改的 A／B 和设置快捷键以配置为准。
 

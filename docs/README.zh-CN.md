@@ -8,7 +8,7 @@
 **把 Unity 游戏带进 VR，把原游戏菜单放在手边。**
 同一个安装器识别 Mono／IL2CPP，提供统一的手柄操作、可移动 2D 界面、世界缩放、人物跟随视角和头显内设置。兼容性仍取决于具体游戏，不保证全部开箱即用。
 
-**[完整操作指南](CONTROLS.zh-CN.md) · [OnlyUI 与本地 AI 辅助边界](ONLYUI.md#简体中文) · [发布页](https://github.com/Iyanzl/UnityOneClickVR/releases)**
+**[完整操作指南](CONTROLS.zh-CN.md) · [设置逐项说明](SETTINGS.zh-CN.md) · [OnlyUI 与本地 AI 辅助边界](ONLYUI.md#简体中文) · [发布页](https://github.com/Iyanzl/UnityOneClickVR/releases)**
 
 ## 特色
 
@@ -61,6 +61,8 @@
 L3 锁定或设置开启时，自由移动、世界抓取和角度调整会暂停，先解锁再操作。Xbox 模式下按钮交给游戏，VR 射线暂时关闭，L3+R3 仍可打开设置。第一／第三人称下，左摇杆可交给原生支持手柄的角色移动，不再移动自由相机；这不代表可以接管任意 NPC。
 
 详见 [操作指南](CONTROLS.zh-CN.md)，包括面板边缘、键盘缩放、人物目标和 Xbox 映射表。
+
+**[设置说明：逐项作用、默认值、性能代价与模型撕裂测试顺序](SETTINGS.zh-CN.md)**。高级页的“Update 阶段渲染”改变绘制先后顺序，“逐次重算蒙皮矩阵”针对逐次绘制的蒙皮计算；两项默认关闭，应分别测试，不是通用拖影修复。
 
 ## OnlyUI 透明化与本地 AI
 

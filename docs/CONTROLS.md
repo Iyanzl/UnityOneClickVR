@@ -1,6 +1,6 @@
 # Controller Guide
 
-[简体中文](CONTROLS.zh-CN.md) | [日本語](CONTROLS.ja.md) | [Home](../README.md)
+[简体中文](CONTROLS.zh-CN.md) | [日本語](CONTROLS.ja.md) | [Settings explained](SETTINGS.md) | [Home](../README.md)
 
 These are the defaults in the shared Mono/IL2CPP runtime, using Quest / Touch names. L3 and R3 mean pressing the left/right stick. Other controllers depend on their SteamVR bindings. User configuration can override A/B and the settings shortcut.
 
