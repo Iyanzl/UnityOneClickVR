@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <NuGetAudit>false</NuGetAudit>
+    <UnityBackend>il2cpp</UnityBackend>
+    <UnityGeneration>modern</UnityGeneration>
+    <DefineConstants>$(DefineConstants);CPP;MODERN</DefineConstants>
+    <DefineConstants Condition="'$(MSBuildProjectName)'=='HybridVrMonoRuntime'">HYBRID_MONO;OPENXR_BUILD</DefineConstants>
+    <OutputPath>$(MSBuildThisFileDirectory)artifacts/$(MSBuildProjectName)/</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <PathMap>$(MSBuildThisFileDirectory)=/_/</PathMap>
+  </PropertyGroup>
+</Project>

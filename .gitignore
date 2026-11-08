@@ -1,0 +1,13 @@
+**/bin/
+**/obj/
+artifacts/
+dependencies/
+cache/
+reports/
+*.user
+*.log
+*.dmp
+arrow.png
+HybridVR/Assets/Cursor.rgba
+HybridVR/Assets/Keyboard.rgba
+source-manifest.json

@@ -1,0 +1,27 @@
+name: Game compatibility report
+description: Report a reproducible rendering, input, UI or installation problem.
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Commit / release
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Game and version, Unity version, Mono/IL2CPP, headset, VD/Link, SteamVR.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps, expected result and actual result
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log excerpt
+      description: Remove personal paths and identifiers. Do not upload game assemblies, assets, saves or credentials.

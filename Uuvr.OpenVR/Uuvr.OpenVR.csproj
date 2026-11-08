@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework><Nullable>enable</Nullable><AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>10</LangVersion><GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies><DebugType>none</DebugType>
+    <DefineConstants>$(DefineConstants);OPENXR_BUILD</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.692" />
+    <Reference Include="$(UnityReferenceDir)/*.dll"><Private>false</Private></Reference>
+    <Reference Update="$(UnityReferenceDir)/UnityEngine.InputLegacyModule.dll"><Aliases>global,LegacyInput</Aliases></Reference>
+    <Compile Include="../HybridVR/Rendering/OpenVr/*.cs;../HybridVR/Shared/*.cs;../HybridVR/Runtime/*.cs;../HybridVR/Adapters/Il2CppOpenVr/*.cs" />
+    <EmbeddedResource Include="../arrow.png" LogicalName="HybridVR.Cursor.png" />
+    <EmbeddedResource Include="../HybridVR/Assets/Cursor.rgba" LogicalName="HybridVR.Cursor.rgba" />
+    <EmbeddedResource Include="../HybridVR/Assets/Keyboard.rgba" LogicalName="HybridVR.Keyboard.rgba" />
+    <EmbeddedResource Include="../HybridVR/Assets/MenuGlyphs.bin" LogicalName="HybridVR.MenuGlyphs.bin" />
+    <EmbeddedResource Include="../HybridVR/Assets/SihHands.bin" LogicalName="HybridVR.SihHands.bin" />
+  </ItemGroup>
+</Project>

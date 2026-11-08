@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net48</TargetFramework><LangVersion>latest</LangVersion><Nullable>enable</Nullable><NuGetAudit>false</NuGetAudit></PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Drawing" />
+    <Compile Include="../../HybridVR/Shared/VirtualKeyboardLayout.cs" Link="VirtualKeyboardLayout.cs" />
+  </ItemGroup>
+</Project>

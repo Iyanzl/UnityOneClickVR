@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>HybridVR.Mono.Runtime</AssemblyName>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DefineConstants>$(DefineConstants);HYBRID_MONO;OPENXR_BUILD</DefineConstants>
+    <GameManagedDir Condition="'$(GameManagedDir)'==''">$(UnityReferenceDir)</GameManagedDir>
+    <NuGetAudit>false</NuGetAudit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(UiReplayGpuProbe)'=='true'">
+    <DefineConstants>$(DefineConstants);HYBRID_UI_GPU_PROBE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../HybridVR/Shared/*.cs" Link="Shared/%(Filename)%(Extension)" />
+    <Compile Include="../../HybridVR/Runtime/TrackedRigRuntime.cs;../../HybridVR/Runtime/FollowCameraRuntime.cs" Link="Runtime/%(Filename)%(Extension)" />
+    <Compile Include="../../HybridVR/Rendering/OpenVr/*.cs" Link="Renderer/%(Filename)%(Extension)" />
+    <Compile Include="../../HybridVR/Adapters/Il2CppOpenVr/*.cs" Link="Host/%(Filename)%(Extension)" />
+    <Compile Include="../../HybridVR/Adapters/Mono/FrameworkCompatibility.cs" Link="Mono/FrameworkCompatibility.cs" />
+    <EmbeddedResource Include="../../arrow.png" LogicalName="HybridVR.Cursor.png" />
+    <EmbeddedResource Include="../../HybridVR/Assets/Cursor.rgba" LogicalName="HybridVR.Cursor.rgba" />
+    <EmbeddedResource Include="../../HybridVR/Assets/Keyboard.rgba" LogicalName="HybridVR.Keyboard.rgba" />
+    <EmbeddedResource Include="../../HybridVR/Assets/MenuGlyphs.bin" LogicalName="HybridVR.MenuGlyphs.bin" />
+    <EmbeddedResource Include="../../HybridVR/Assets/SihHands.bin" LogicalName="HybridVR.SihHands.bin" />
+    <Reference Include="BepInEx">
+      <HintPath>$(BepInExCoreDir)/BepInEx.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(BepInExCoreDir)/0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameManagedDir)/UnityEngine*.dll">
+      <Private>False</Private>
+    </Reference>
+    <Reference Update="$(GameManagedDir)/UnityEngine.InputLegacyModule.dll">
+      <Aliases>global,LegacyInput</Aliases>
+    </Reference>
+    <Reference Include="$(GameManagedDir)/netstandard.dll">
+      <Private>False</Private>
+    </Reference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+</Project>
