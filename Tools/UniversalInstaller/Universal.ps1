@@ -58,28 +58,19 @@ try {
         Write-Host "This downloads ONLY Unity base libraries into this package cache: $url"
         Write-Host 'The game is not started or modified. An internet connection is needed only for this step.'
         if (!$Yes -and !(Confirm-UAction 'Download?')) { exit 0 }
-        $cache=Resolve-UChild $PSScriptRoot ("cache\unity-libs\$version.zip")
-        New-Item -ItemType Directory -Path (Split-Path -Parent $cache) -Force | Out-Null
-        $temp=$cache+'.download'
-        try {
-            [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12
-            Invoke-WebRequest -Uri $url -OutFile $temp -UseBasicParsing -TimeoutSec 180
-            Test-UUnityZip $temp
-            $catalog=Get-UCatalog $PSScriptRoot
-            $known=@($catalog.unityLibraries | Where-Object version -eq $version)
-            $hash=Get-UHash $temp
-            if ($known.Count -and $known[0].sha256 -ne $hash) { throw 'Official download differs from the pinned cache. Review before replacing.' }
-            Copy-Item -LiteralPath $temp -Destination $cache -Force
-            if (!$known.Count) {
-                $catalog.unityLibraries+=@([pscustomobject]@{version=$version;sha256=$hash;source=$url})
-                Write-UJson (Join-Path $PSScriptRoot 'catalog.json') $catalog
-            }
-            Write-Host "Offline cache ready: $version. Drag the game onto Install-HybridVR.cmd next."
-        } finally { if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Force } }
+        Save-UUnityCache $PSScriptRoot $version
+        Write-Host "Offline cache ready: $version. Drag the game onto Install-HybridVR.cmd next."
         exit 0
     }
     if ($ReplaceProtectedVr -and !$ReplaceExistingVr) { throw '-ReplaceProtectedVr also requires explicit -ReplaceExistingVr approval.' }
     $plan=Get-UPlan $PSScriptRoot $GameExe -ReplaceProtectedVr:$ReplaceProtectedVr
+    if ($Mode -eq 'Install' -and $plan.errors.Count -eq 1 -and $plan.errors[0].StartsWith('Offline base libraries missing for ')) {
+        Write-Host "First IL2CPP setup needs base libraries from https://unity.bepinex.dev/libraries/$($plan.unityVersion).zip"
+        Write-Host 'Only the installer cache is downloaded. No game is started or changed before installation approval.'
+        if (!$Yes -and !(Confirm-UAction 'Download missing base libraries and continue?')) { Write-Host 'Cancelled. No game files changed.'; exit 0 }
+        Save-UUnityCache $PSScriptRoot $plan.unityVersion
+        $plan=Get-UPlan $PSScriptRoot $GameExe -ReplaceProtectedVr:$ReplaceProtectedVr
+    }
     Write-Host "Game: $($plan.game.exe)"
     Write-Host "Detected: $($plan.game.backend) x64 / Unity $($plan.unityVersion)"
     Write-Host "Selected: $($plan.component) / $($plan.xrApi) / D3D11"

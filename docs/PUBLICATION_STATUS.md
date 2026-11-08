@@ -1,4 +1,4 @@
-# Initial Publication Status
+# Public Full Package Status
 
 Date: 2026-11-08. Base: private M033-R20 language candidate.
 
@@ -14,11 +14,15 @@ Date: 2026-11-08. Base: private M033-R20 language candidate.
 
 This is a build and contract check, not a new headset acceptance test. The replacement public cursor and keyboard font have not been tested in a headset. No installed game files were changed during publication.
 
-## Pending Before a Complete Public Installer
+## Full Installer Validation
 
-1. Establish exact source/license provenance of the specialized UnityHooks `openvr_api.dll` used by IL2CPP. Do not substitute a stock DLL with a different ABI.
-2. Complete loader/native dependency inventory and corresponding-source/license material.
-3. Produce a clean binary package without local Unity/game caches, generated interop, private reports or development snapshots.
-4. Run clean installation, uninstall/restore and headset checks on that package.
+- Legacy UnityHooks DLL: pinned VRGIN upstream download matched byte-for-byte; Valve and VRGIN notices retained. See NATIVE_DEPENDENCIES.md.
+- Official BepInEx loaders verified; LGPL source archives for loaders, UnityDoorstop and Il2CppInterop are included in the full ZIP.
+- No local Unity/game cache, generated interop, report or private development snapshot is copied into the public package.
+- First IL2CPP download, install, launcher generation and uninstall/restore: passed through the actual Windows PowerShell CLI using a synthetic game fixture. No real game was executed.
+- Download/cache contracts: 10 passed, including checksum rejection and no-network cache reuse.
+- Desktop/VR launcher contracts: 114 passed.
+- Installer/restore regression suite: 3380 checks passed on the assembled candidate with a prepared official cache.
+- Compiled Mono and IL2CPP comparison: all 2752 method bodies match the accepted private R20 build. Publication asset bytes differ intentionally. The IL2CPP projects explicitly retain the tested unoptimized `modern-il2cpp` compilation setting even when built with the public Release configuration.
 
-The public repository is intentionally labeled a **source preview**, not a ready-to-use installer release. The tested private package remains unchanged.
+The full ZIP is installable without a development environment. First-time IL2CPP dependency preparation requires internet approval unless a cache was prepared in advance. The package remains an experimental compatibility release; headset acceptance of the publication-specific cursor/keyboard assets is pending. Installed games and the private test ZIP were not modified during release preparation.

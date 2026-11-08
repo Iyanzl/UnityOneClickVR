@@ -5,8 +5,7 @@
 An experimental, one-click VR setup project for Windows Unity **Mono and IL2CPP** games.
 The goal is a shared control scheme and settings experience across games, rather than a separate mod for every title.
 
-**Initial public source preview. There is not yet a public, audited installer release.**
-The existing local test package is not uploaded: it contains Unity reference caches and native dependencies that still need a redistribution audit. Do not download installers from unrelated mirrors. This repository is not an official Unity, Valve, Meta, or Virtual Desktop product.
+**Download the complete installer from [Releases](https://github.com/Iyanzl/UnityOneClickVR/releases).** Choose the asset named `UnityOneClickVR-M033-R20-full-win-x64.zip`, not GitHub's automatic Source code archive. This is an experimental compatibility release, not a guarantee that every Unity game works. This repository is not an official Unity, Valve, Meta, or Virtual Desktop product.
 
 ## Features
 
@@ -30,9 +29,19 @@ Use only with games you are entitled to modify. Do not use in anti-cheat-protect
 
 ## Getting Started
 
-For developers, see [BUILDING.md](docs/BUILDING.md). Unity/game assemblies, SteamVR and loader distributions are not included. Source code alone is **not** the drag-and-drop installer.
+1. Extract the **full installer ZIP** into a writable folder. Do not run it from inside the ZIP or copy its payload folders over a game manually.
+2. Close the game. Drag its Unity game EXE onto `Install-HybridVR.bat` (or double-click it and select the EXE).
+3. Read the detected runtime and planned changes. Confirm with lowercase `y`. An existing VR mod is backed up before recognized files are replaced; unrelated mods are preserved where possible.
+4. On first IL2CPP installation, approve the official Unity base-library download if prompted. It is cached for reuse. `Prepare-Offline-Dependencies.cmd` can prepare that cache on an internet-connected PC in advance. Missing/unknown Unity versions or loader conflicts can still block installation safely.
+5. Connect your headset through SteamVR and launch `Start-VR.bat` from the game directory. Press both stick buttons (L3+R3) for settings, or use F10 (configurable). New configurations default to English; Chinese and Japanese are selectable.
 
-The eventual installer preserves these entry points:
+The complete installer includes the tested BepInEx loader payloads and required mod dependencies. SteamVR, headset streaming software and game assemblies are not included. Existing supported loaders/configuration are retained where possible. Camera/rendering compatibility and OnlyUI may still need settings changes.
+
+Xbox-controller emulation additionally requires a compatible virtual-controller driver already installed on the PC; the installer does not install drivers or change the system XR runtime. Keep the generated `_HybridVR` backup directory until after uninstall/restore. On first IL2CPP startup, generating this game's own interop can take longer than later starts.
+
+For developers, see [BUILDING.md](docs/BUILDING.md). Source code alone is **not** the drag-and-drop installer.
+
+The installer creates these entry points:
 
 - `Start-VR.bat`: launch with the VR mod.
 - `Start-Desktop.bat`: launch without this mod's VR runtime.

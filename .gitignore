@@ -7,6 +7,7 @@ reports/
 *.user
 *.log
 *.dmp
+*.zip
 arrow.png
 HybridVR/Assets/Cursor.rgba
 HybridVR/Assets/Keyboard.rgba

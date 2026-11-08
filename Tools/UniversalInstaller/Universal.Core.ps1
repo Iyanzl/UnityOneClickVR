@@ -99,6 +99,31 @@ function Get-UCatalog([string]$Package) {
     }
     return $catalog
 }
+function Save-UUnityCache([string]$Package, [string]$Version) {
+    if ($Version -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid Unity base-library version.' }
+    $catalog=Get-UCatalog $Package
+    $known=@($catalog.unityLibraries | Where-Object version -eq $Version)
+    if ($known.Count -gt 1) { throw 'Duplicate cache version in catalog.' }
+    $cache=Resolve-UChild $Package ("cache\unity-libs\$Version.zip")
+    if ($known.Count -eq 1 -and (Get-UHash $cache) -eq $known[0].sha256) { Test-UUnityZip $cache; return }
+    $url="https://unity.bepinex.dev/libraries/$Version.zip"
+    New-Item -ItemType Directory -Path (Split-Path -Parent $cache) -Force | Out-Null
+    $temp=Resolve-UChild $Package ("cache\unity-libs\$Version."+[Guid]::NewGuid().ToString('N')+'.download')
+    try {
+        [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12
+        Invoke-WebRequest -Uri $url -OutFile $temp -UseBasicParsing -TimeoutSec 180
+        Test-UUnityZip $temp
+        $hash=Get-UHash $temp
+        if ($known.Count -and $known[0].sha256 -ne $hash) { throw 'Official download differs from the pinned cache. Review before replacing.' }
+        Assert-UNoLink $cache
+        Copy-Item -LiteralPath $temp -Destination $cache -Force
+        if ((Get-UHash $cache) -ne $hash) { throw 'Cache write verification failed.' }
+        if (!$known.Count) {
+            $catalog.unityLibraries+=@([pscustomobject]@{version=$Version;sha256=$hash;source=$url})
+            Write-UJson (Resolve-UChild $Package 'catalog.json') $catalog
+        }
+    } finally { if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Force } }
+}
 function Get-UFiles([string]$Root) {
     if (!(Test-Path -LiteralPath $Root)) { return }
     Assert-UNoLink $Root

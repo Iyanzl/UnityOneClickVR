@@ -8,13 +8,14 @@ UnityOneClickVR is maintained by [Iyanzl](https://github.com/Iyanzl). It combine
 - [NewUnityModder / UnityVRMod](https://github.com/NewUnityModder/UnityVRMod): manual stereo rendering and interaction design/code lineage; GPL-3.0.
 - [wentengwen / SummerInHeat_SiH_VR](https://github.com/wentengwen/SummerInHeat_SiH_VR) and [a1156883061's fork](https://github.com/a1156883061/SummerInHeat_SiH_VR): rendering/control integration and the derived glove mesh resource; GPL-3.0. The hand mesh notice and export tool are included.
 - [Valve / OpenVR](https://github.com/ValveSoftware/openvr): API bindings, SDK header and import library; BSD-3-Clause.
+- [Eusth / VRGIN](https://github.com/Eusth/VRGIN): distribution source for the unchanged legacy Valve UnityHooks loader binary required by the IL2CPP path. MIT repository notice and Valve BSD notice are both retained; exact hash/provenance is recorded in `docs/NATIVE_DEPENDENCIES.md`.
 - [Google Fonts / Noto Sans SC](https://github.com/google/fonts/tree/main/ofl/notosanssc): the embedded menu glyph subset and build-time typography; SIL Open Font License 1.1.
 
 ## Referenced During Research
 
 These are research acknowledgments, not claims that their complete code or binaries are bundled:
 
-- [Eusth / VRGIN](https://github.com/Eusth/VRGIN) and [IOVR](https://github.com/Eusth/IOVR): Unity VR interaction and camera research.
+- [Eusth / IOVR](https://github.com/Eusth/IOVR): Unity VR interaction and camera research. VRGIN is also a direct binary distribution source as noted above.
 - [originalnicodr / CinematicUnityExplorer](https://github.com/originalnicodr/CinematicUnityExplorer): camera discovery and free-camera investigation.
 - [Zalafina / QKeyMapper](https://github.com/Zalafina/QKeyMapper): input-mapping workflow research.
 

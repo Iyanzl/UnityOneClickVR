@@ -11,3 +11,8 @@ jobs:
         with:
           dotnet-version: '9.0.x'
       - run: dotnet run --project tests/SharedContracts -c Release
+  installer-cache:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: powershell -NoProfile -ExecutionPolicy Bypass -File tests/InstallerCache.ps1
