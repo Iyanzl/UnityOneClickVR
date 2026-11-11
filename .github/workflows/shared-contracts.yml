@@ -16,3 +16,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: powershell -NoProfile -ExecutionPolicy Bypass -File tests/InstallerCache.ps1
+      - run: powershell -NoProfile -ExecutionPolicy Bypass -File tests/InstallerLoaderReuse.ps1

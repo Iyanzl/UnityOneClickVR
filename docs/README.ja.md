@@ -2,7 +2,7 @@
 
 [English](../README.md) | [简体中文](README.zh-CN.md)
 
-[![完全版インストーラー](https://img.shields.io/badge/Download-full_installer-2ea44f?style=for-the-badge&logo=github)](https://github.com/Iyanzl/UnityOneClickVR/releases/download/v0.3.3-r20/UnityOneClickVR-M033-R20-full-win-x64.zip)
+[![完全版インストーラー](https://img.shields.io/badge/Download-full_installer-2ea44f?style=for-the-badge&logo=github)](https://github.com/Iyanzl/UnityOneClickVR/releases/latest)
 [![Ko-fi で開発を支援](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/iyanzl)
 
 **Unity ゲームを VR に。ゲームのメニューは手元に。**
@@ -22,7 +22,7 @@ Mono / IL2CPP 共通のインストーラー、操作、移動できる 2D パ�
 
 ## インストール
 
-**完全版インストーラーは [Releases](https://github.com/Iyanzl/UnityOneClickVR/releases) から取得できます。** `UnityOneClickVR-M033-R20-full-win-x64.zip` を選んでください。GitHub の Source code アーカイブはインストーラーではありません。
+**完全版インストーラーは [最新リリース](https://github.com/Iyanzl/UnityOneClickVR/releases/latest) から取得できます。** Windows x64 インストーラー ZIP を選んでください。GitHub の Source code アーカイブはインストーラーではありません。
 
 1. ZIP を書き込み可能なフォルダーに展開し、ゲームを終了します。
 2. ゲームの EXE を `Install-HybridVR.bat` にドラッグします。ダブルクリックして EXE を選択することもできます。
@@ -31,6 +31,8 @@ Mono / IL2CPP 共通のインストーラー、操作、移動できる 2D パ�
 5. SteamVR にヘッドセットを接続し、ゲームフォルダーの `Start-VR.bat` で起動します。L3+R3 または F10 で設定を開き、日本語を選択できます。
 
 デスクトップ用は `Start-Desktop.bat`、削除と復元は `Uninstall-HybridVR.cmd` です。アンインストールにも `y` の確認が必要です。既存の MOD やセーブデータを必ずバックアップしてください。
+
+既存の BepInEx ローダーは再インストールせずに再利用します。未検証の IL2CPP 版でも、バックエンドが一致し、起動ファイルがそろって有効であり、interop が生成済みなら、警告を確認して続行できます。VR の動作を保証するものではありません。不完全な構成や残留した起動ファイルは引き続き検出して停止します。
 
 ## 標準操作
 

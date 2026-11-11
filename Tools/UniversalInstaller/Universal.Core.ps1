@@ -198,6 +198,7 @@ function Get-UPlan([string]$Package, [string]$GameExe, [switch]$ReplaceProtected
     if (($game.backend -eq 'Mono' -and $isCpp) -or ($game.backend -eq 'IL2CPP' -and $isMono)) { $errors.Add('Existing BepInEx belongs to the other backend; do not mix loaders.') }
     $existingLoader=$isMono -or $isCpp
     $loaderKnown=$false
+    $unverifiedIl2CppLoader=$false
     if ($existingLoader) {
         if ($game.backend -eq 'Mono') {
             try { $loaderKnown=[Reflection.AssemblyName]::GetAssemblyName((Join-Path $game.root 'BepInEx\core\BepInEx.dll')).Version.Major -eq 5 } catch { }
@@ -205,9 +206,20 @@ function Get-UPlan([string]$Package, [string]$GameExe, [switch]$ReplaceProtected
             $loaderHash=Get-UHash (Join-Path $game.root 'BepInEx\core\BepInEx.Unity.IL2CPP.dll')
             $loaderKnown=$catalog.acceptedIl2CppLoaders -contains $loaderHash
         }
-        if (!$loaderKnown) { $errors.Add('Unreviewed existing loader version. It was preserved; U01 refuses an automatic upgrade.') }
+        if (!$loaderKnown) {
+            if ($game.backend -eq 'IL2CPP' -and $isCpp -and !$isMono) {
+                $assembly=$null
+                try { $assembly=[Reflection.AssemblyName]::GetAssemblyName((Resolve-UChild $game.root 'BepInEx\core\BepInEx.Unity.IL2CPP.dll')) } catch { }
+                if (!$assembly -or $assembly.Name -ne 'BepInEx.Unity.IL2CPP') {
+                    $errors.Add('Existing IL2CPP loader is not a readable BepInEx.Unity.IL2CPP assembly; repair the original installation first.')
+                } else {
+                    $unverifiedIl2CppLoader=$true
+                    $warnings.Add("Existing IL2CPP BepInEx (assembly version $($assembly.Version), SHA-256 $loaderHash) is not in the tested list. It will be reused without replacement; VR compatibility is not guaranteed.")
+                }
+            } else { $errors.Add('Unreviewed existing loader version. It was preserved; U01 refuses an automatic upgrade.') }
+        }
         $messages.Add('Existing loader/core and other mods are preserved; no loader downgrade or upgrade.')
-        if (!(Test-Path -LiteralPath (Join-Path $game.root 'doorstop_config.ini')) -or !(Test-Path -LiteralPath (Join-Path $game.root 'winhttp.dll'))) { $errors.Add('Existing loader has an incomplete/custom bootstrap; manual review required.') }
+        if (!(Test-Path -LiteralPath (Join-Path $game.root 'doorstop_config.ini') -PathType Leaf) -or !(Test-Path -LiteralPath (Join-Path $game.root 'winhttp.dll') -PathType Leaf)) { $errors.Add('Existing loader has an incomplete/custom bootstrap; manual review required.') }
         else {
             $door=Read-HybridIni (Join-Path $game.root 'doorstop_config.ini')
             if ($door['General/enabled'] -ine 'true') { $errors.Add('Existing Doorstop is disabled. Enable/review it before installation.') }
@@ -274,8 +286,8 @@ function Get-UPlan([string]$Package, [string]$GameExe, [switch]$ReplaceProtected
     if ($game.backend -eq 'IL2CPP') {
         $meta=Join-Path $game.data 'il2cpp_data\Metadata\global-metadata.dat'
         if (!(Test-Path -LiteralPath $meta)) { $errors.Add('IL2CPP metadata is missing/protected; generic generation is unavailable.') }
-        $interopReady=(Test-Path -LiteralPath (Join-Path $game.root 'BepInEx\interop\UnityEngine.CoreModule.dll')) -and
-            (Test-Path -LiteralPath (Join-Path $game.root 'BepInEx\interop\assembly-hash.txt'))
+        $interopReady=(Test-Path -LiteralPath (Join-Path $game.root 'BepInEx\interop\UnityEngine.CoreModule.dll') -PathType Leaf) -and
+            (Test-Path -LiteralPath (Join-Path $game.root 'BepInEx\interop\assembly-hash.txt') -PathType Leaf)
         $newLoaderHash=@($loader.files | Where-Object target -eq 'BepInEx\core\BepInEx.Unity.IL2CPP.dll')[0].sha256
         $localZipSupported=(!$existingLoader) -or ((Get-UHash (Join-Path $game.root 'BepInEx\core\BepInEx.Unity.IL2CPP.dll')) -eq $newLoaderHash)
         if ($localZipSupported) {
@@ -308,7 +320,7 @@ function Get-UPlan([string]$Package, [string]$GameExe, [switch]$ReplaceProtected
     elseif ($component.id -eq 'mono-m02') { $warnings.Add('Mono shared runtime: OpenVR operations/menu, follow cameras and hands. Requires D3D11 and SteamVR. Optional UiOnly depends on runtime/UI capabilities; old OpenXR/UUVR components are disabled, not co-loaded. Headset compatibility still needs validation.') }
     else { $warnings.Add('Mono C108: legacy settings/interaction. IL2CPP follow-camera features and the new menu are not yet unified. SummerInHeat SiH installations should remain on their accepted dedicated baseline.') }
     $readGuards=[Collections.Generic.List[object]]::new()
-    foreach ($r in @((Split-Path -Leaf $game.exe),'UnityPlayer.dll','GameAssembly.dll','doorstop_config.ini','BepInEx\core\BepInEx.dll','BepInEx\core\BepInEx.Unity.IL2CPP.dll')) {
+    foreach ($r in @((Split-Path -Leaf $game.exe),'UnityPlayer.dll','GameAssembly.dll','winhttp.dll','doorstop_config.ini','BepInEx\core\BepInEx.dll','BepInEx\core\BepInEx.Unity.IL2CPP.dll')) {
         $p=Resolve-UChild $game.root $r
         $readGuards.Add([pscustomobject]@{path=$r;sha256=(Get-UHash $p)})
     }
@@ -316,12 +328,13 @@ function Get-UPlan([string]$Package, [string]$GameExe, [switch]$ReplaceProtected
     $vrPlugins=@($component.files | Where-Object { $_.target -match '^BepInEx\\(plugins|patchers)\\.+\.dll$' } |
         ForEach-Object { [pscustomobject]@{path=$_.target;sha256=$_.sha256} })
     return [pscustomobject]@{schema=1;package=$catalog.id;game=$game;unityVersion=$version;component=$component.id;xrApi=$component.xrApi;vrPlugins=$vrPlugins;rendering=$rendering;
-        existingLoader=$existingLoader;existingVr=$existingVr;protectedVrReplacement=[bool]$ReplaceProtectedVr;messages=$messages.ToArray();warnings=$warnings.ToArray();errors=$errors.ToArray();
+        existingLoader=$existingLoader;unverifiedIl2CppLoader=$unverifiedIl2CppLoader;existingVr=$existingVr;protectedVrReplacement=[bool]$ReplaceProtectedVr;messages=$messages.ToArray();warnings=$warnings.ToArray();errors=$errors.ToArray();
         canInstall=($errors.Count -eq 0);operations=$ops.ToArray();guards=$readGuards.ToArray();headsetVerified=$false}
 }
 
-function Install-UPlan([string]$Package, $Plan, [switch]$ReplaceExistingVr) {
+function Install-UPlan([string]$Package, $Plan, [switch]$ReplaceExistingVr, [switch]$AllowUnverifiedIl2CppLoader) {
     if (!$Plan.canInstall) { throw ($Plan.errors -join "`n") }
+    if ($Plan.unverifiedIl2CppLoader -and !$AllowUnverifiedIl2CppLoader) { throw 'Reusing an unverified IL2CPP loader requires explicit approval.' }
     if ($Plan.existingVr -and !$ReplaceExistingVr) { throw 'Existing VR installation preserved. Rerun with explicit -ReplaceExistingVr only after reviewing the report.' }
     Assert-UGameClosed $Plan.game
     $root=$Plan.game.root

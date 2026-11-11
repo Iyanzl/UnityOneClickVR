@@ -5,6 +5,7 @@ param(
     [switch]$ReplaceExistingVr,
     [switch]$ReplaceProtectedVr,
     [switch]$SkinDiagnostics,
+    [switch]$AllowUnverifiedIl2CppLoader,
     [switch]$Yes
 )
 $ErrorActionPreference='Stop'
@@ -84,14 +85,18 @@ try {
     Write-UJson (Join-Path $reports 'last-preflight.json') $plan
     if (!$plan.canInstall) { throw 'Installation blocked. No game files changed. See reports/last-preflight.json.' }
     if ($Mode -eq 'Inspect') { exit 0 }
+    if ($plan.unverifiedIl2CppLoader -and $Yes -and !$AllowUnverifiedIl2CppLoader) {
+        throw 'Existing IL2CPP loader has not been tested. Run interactively or explicitly pass -AllowUnverifiedIl2CppLoader with -Yes.'
+    }
     if ($plan.existingVr -and !$ReplaceExistingVr) {
         if ($Yes) { throw 'Existing VR needs explicit -ReplaceExistingVr approval.' }
         Write-Host 'This replaces only recognized VR files and preserves settings. Backups are retained.'
         if (!(Confirm-UAction 'Back up and replace the recognized existing VR components?')) { exit 0 }
         $ReplaceExistingVr=$true
     }
-    if (!$Yes -and !(Confirm-UAction 'Install with backup?')) { exit 0 }
-    $result=Install-UPlan $PSScriptRoot $plan -ReplaceExistingVr:$ReplaceExistingVr
+    $prompt=if($plan.unverifiedIl2CppLoader){'Install with backup and keep this unverified IL2CPP loader?'}else{'Install with backup?'}
+    if (!$Yes -and !(Confirm-UAction $prompt)) { Write-Host 'Cancelled. No game files changed.'; exit 0 }
+    $result=Install-UPlan $PSScriptRoot $plan -ReplaceExistingVr:$ReplaceExistingVr -AllowUnverifiedIl2CppLoader:($AllowUnverifiedIl2CppLoader -or !$Yes)
     Write-Host "Installed. Backup: $($result.backup)" -ForegroundColor Green
     Write-Host 'Use Start-VR.bat for VR, Start-Desktop.bat for desktop, or Uninstall-HybridVR.cmd to uninstall.'
     Write-Host 'Desktop mode temporarily parks owned VR plugins, keeps other mods, and restores after exit. First IL2CPP launch still generates this game own interop.'

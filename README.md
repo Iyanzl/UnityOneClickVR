@@ -2,7 +2,7 @@
 
 [简体中文](docs/README.zh-CN.md) | [日本語](docs/README.ja.md)
 
-[![Download the full installer](https://img.shields.io/badge/Download-full_installer-2ea44f?style=for-the-badge&logo=github)](https://github.com/Iyanzl/UnityOneClickVR/releases/download/v0.3.3-r20/UnityOneClickVR-M033-R20-full-win-x64.zip)
+[![Download the full installer](https://img.shields.io/badge/Download-full_installer-2ea44f?style=for-the-badge&logo=github)](https://github.com/Iyanzl/UnityOneClickVR/releases/latest)
 [![Support development on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/iyanzl)
 
 **Bring Unity games into VR, then keep their original interface within reach.**
@@ -10,7 +10,7 @@ One installer for Windows Unity **Mono and IL2CPP** games, with a shared control
 
 **[Install](#getting-started) · [Controller Guide](docs/CONTROLS.md) · [Settings Explained](docs/SETTINGS.md) · [OnlyUI / Local AI Boundaries](docs/ONLYUI.md) · [Release Notes](https://github.com/Iyanzl/UnityOneClickVR/releases)**
 
-Download `UnityOneClickVR-M033-R20-full-win-x64.zip`, not GitHub's automatic Source code archive. Support is optional and never unlocks features or guarantees compatibility. This is not an official Unity, Valve, Meta or Virtual Desktop product.
+Download the full Windows x64 installer ZIP, not GitHub's automatic Source code archive. Support is optional and never unlocks features or guarantees compatibility. This is not an official Unity, Valve, Meta or Virtual Desktop product.
 
 ## What You Can Do
 
@@ -80,7 +80,7 @@ Use only with games you are entitled to modify. Do not use in anti-cheat-protect
 4. On first IL2CPP installation, approve the official Unity base-library download if prompted. It is cached for reuse. `Prepare-Offline-Dependencies.cmd` can prepare that cache on an internet-connected PC in advance. Missing/unknown Unity versions or loader conflicts can still block installation safely.
 5. Connect your headset through SteamVR and launch `Start-VR.bat` from the game directory. Press both stick buttons (L3+R3) for settings, or use F10 (configurable). New configurations default to English; Chinese and Japanese are selectable.
 
-The complete installer includes the tested BepInEx loader payloads and required mod dependencies. SteamVR, headset streaming software and game assemblies are not included. Existing supported loaders/configuration are retained where possible. Camera/rendering compatibility and OnlyUI may still need settings changes.
+The complete installer includes the tested BepInEx loader payloads and required mod dependencies. SteamVR, headset streaming software and game assemblies are not included. An existing BepInEx loader is reused without reinstalling it. An unlisted IL2CPP build can be reused after confirmation if the backend matches, the bootstrap is enabled and complete, and game interop has already been generated. This does not guarantee VR compatibility. Leftover or incomplete bootstrap files still block installation. Camera/rendering compatibility and OnlyUI may still need settings changes.
 
 Xbox-controller emulation additionally requires a compatible virtual-controller driver already installed on the PC; the installer does not install drivers or change the system XR runtime. Keep the generated `_HybridVR` backup directory until after uninstall/restore. On first IL2CPP startup, generating this game's own interop can take longer than later starts.
 

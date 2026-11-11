@@ -2,7 +2,7 @@
 
 [English](../README.md) | [日本語](README.ja.md)
 
-[![下载完整安装包](https://img.shields.io/badge/Download-full_installer-2ea44f?style=for-the-badge&logo=github)](https://github.com/Iyanzl/UnityOneClickVR/releases/download/v0.3.3-r20/UnityOneClickVR-M033-R20-full-win-x64.zip)
+[![下载完整安装包](https://img.shields.io/badge/Download-full_installer-2ea44f?style=for-the-badge&logo=github)](https://github.com/Iyanzl/UnityOneClickVR/releases/latest)
 [![支持 Ko-fi 上的开发](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/iyanzl)
 
 **把 Unity 游戏带进 VR，把原游戏菜单放在手边。**
@@ -27,7 +27,7 @@
 
 ## 安装
 
-**完整安装包在 [Releases](https://github.com/Iyanzl/UnityOneClickVR/releases)。** 下载 `UnityOneClickVR-M033-R20-full-win-x64.zip`，不要下载 GitHub 自动生成的 Source code 当作安装包。
+**完整安装包在 [最新发布页](https://github.com/Iyanzl/UnityOneClickVR/releases/latest)。** 下载 Windows x64 安装 ZIP，不要下载 GitHub 自动生成的 Source code 当作安装包。
 
 1. 将 ZIP 完整解压到可写文件夹，关闭游戏。
 2. 把游戏 EXE 拖到 `Install-HybridVR.bat`，或双击后选择游戏 EXE。
@@ -37,7 +37,7 @@
 
 `Start-Desktop.bat` 用于不加载本补丁 VR 运行时的桌面模式；`Uninstall-HybridVR.cmd` 经 `y` 确认后恢复安装时备份的文件。升级请先用旧版本卸载入口恢复，再安装新版，不要手动覆盖整个 BepInEx。
 
-完整包包含 BepInEx 加载器和补丁依赖，不包含游戏程序集、SteamVR、串流软件或本机 Unity 缓存。当前属于兼容性测试版，不保证所有 Unity 游戏开箱即用。
+完整包包含 BepInEx 加载器和补丁依赖，不包含游戏程序集、SteamVR、串流软件或本机 Unity 缓存。已有的 BepInEx 加载器会复用，不重装。IL2CPP 版本不在已验证名单时，只要后端匹配、启动组件完整且启用、已生成 interop，就可确认后继续，不保证 VR 一定能运行。启动文件残留或安装不完整仍会拦截。当前属于兼容性测试版，不保证所有 Unity 游戏开箱即用。
 
 ## 默认操作
 
